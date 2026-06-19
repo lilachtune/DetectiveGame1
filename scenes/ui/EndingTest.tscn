@@ -1,0 +1,121 @@
+[gd_scene load_steps=1 format=3]
+
+[ext_resource type="Script" path="res://scripts/EndingTest.gd" id="1"]
+
+[node name="EndingTest" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+visible = false
+script = ExtResource("1")
+
+[node name="Overlay" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.75)
+mouse_filter = 1
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -380.0
+offset_top = -280.0
+offset_right = 380.0
+offset_bottom = 280.0
+
+[node name="BtnClose" type="Button" parent="Panel"]
+layout_mode = 1
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -58.0
+offset_top = 16.0
+offset_right = -18.0
+offset_bottom = 56.0
+custom_minimum_size = Vector2(40, 40)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_type_variation = &"CloseButton"
+text = "✕"
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "⚖  ФИНАЛЬНОЕ ОБВИНЕНИЕ"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0.97, 0.95, 1, 1)
+
+[node name="TitleDivider" type="ColorRect" parent="Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 2)
+color = Color(0.62, 0.46, 0.92, 0.4)
+
+[node name="Row_Killer" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="KillerLabel" type="Label" parent="Panel/VBox/Row_Killer"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 0)
+size_flags_vertical = 4
+text = "🔪  Убийца:"
+
+[node name="KillerSelect" type="OptionButton" parent="Panel/VBox/Row_Killer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Row_Method" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="MethodLabel" type="Label" parent="Panel/VBox/Row_Method"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 0)
+size_flags_vertical = 4
+text = "⚔  Метод убийства:"
+
+[node name="MethodSelect" type="OptionButton" parent="Panel/VBox/Row_Method"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Row_Motive" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="MotiveLabel" type="Label" parent="Panel/VBox/Row_Motive"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 0)
+size_flags_vertical = 4
+text = "💰  Мотив:"
+
+[node name="MotiveSelect" type="OptionButton" parent="Panel/VBox/Row_Motive"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BtnConfirm" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 52)
+text = "📜  ПРЕДЪЯВИТЬ ОБВИНЕНИЕ"
+
+[node name="ResultLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3

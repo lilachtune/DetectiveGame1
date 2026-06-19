@@ -1,0 +1,466 @@
+[gd_resource type="Theme" load_steps=24 format=3]
+
+; ── Кнопки ──────────────────────────────────────────────────────────────────
+[sub_resource type="StyleBoxFlat" id="BtnNormal"]
+bg_color = Color(0.13, 0.12, 0.19, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.58, 0.46, 0.78, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 4
+content_margin_left = 18
+content_margin_right = 18
+content_margin_top = 8
+content_margin_bottom = 8
+
+[sub_resource type="StyleBoxFlat" id="BtnHover"]
+bg_color = Color(0.27, 0.20, 0.38, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.78, 0.62, 1.0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.4, 0.25, 0.6, 0.4)
+shadow_size = 6
+content_margin_left = 18
+content_margin_right = 18
+content_margin_top = 8
+content_margin_bottom = 8
+
+[sub_resource type="StyleBoxFlat" id="BtnPressed"]
+bg_color = Color(0.45, 0.32, 0.62, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.8, 1.0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+content_margin_left = 18
+content_margin_right = 18
+content_margin_top = 8
+content_margin_bottom = 8
+
+[sub_resource type="StyleBoxFlat" id="BtnDisabled"]
+bg_color = Color(0.1, 0.1, 0.13, 0.5)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3, 0.3, 0.35, 0.5)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+content_margin_left = 18
+content_margin_right = 18
+content_margin_top = 8
+content_margin_bottom = 8
+
+; ── Панели (общие фоны окон) ───────────────────────────────────────────────
+[sub_resource type="StyleBoxFlat" id="PanelBg"]
+bg_color = Color(0.082, 0.075, 0.118, 0.97)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.55, 0.43, 0.78, 0.85)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 12
+content_margin_left = 18
+content_margin_right = 18
+content_margin_top = 14
+content_margin_bottom = 14
+
+; ── Списки (ItemList) ──────────────────────────────────────────────────────
+[sub_resource type="StyleBoxFlat" id="ListBg"]
+bg_color = Color(0.05, 0.045, 0.075, 0.7)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.32, 0.55, 0.6)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 10
+content_margin_top = 8
+content_margin_right = 10
+content_margin_bottom = 8
+
+[sub_resource type="StyleBoxFlat" id="ListSelected"]
+bg_color = Color(0.42, 0.30, 0.62, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+; ── Слайдер ────────────────────────────────────────────────────────────────
+[sub_resource type="StyleBoxFlat" id="SliderBg"]
+bg_color = Color(0.05, 0.045, 0.075, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_top = 5
+content_margin_bottom = 5
+
+[sub_resource type="StyleBoxFlat" id="SliderFill"]
+bg_color = Color(0.62, 0.46, 0.92, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_top = 5
+content_margin_bottom = 5
+
+; ── Кнопка-крестик (компактная, без больших отступов темы Button) ─────────
+[sub_resource type="StyleBoxFlat" id="CloseBtnNormal"]
+bg_color = Color(0.18, 0.1, 0.13, 0.85)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6, 0.32, 0.4, 0.8)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 2
+content_margin_right = 2
+content_margin_top = 2
+content_margin_bottom = 2
+
+[sub_resource type="StyleBoxFlat" id="CloseBtnHover"]
+bg_color = Color(0.55, 0.16, 0.2, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.95, 0.45, 0.5, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 2
+content_margin_right = 2
+content_margin_top = 2
+content_margin_bottom = 2
+
+[sub_resource type="StyleBoxFlat" id="CloseBtnPressed"]
+bg_color = Color(0.7, 0.22, 0.26, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.6, 0.65, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 2
+content_margin_right = 2
+content_margin_top = 2
+content_margin_bottom = 2
+
+; ── Главное меню ───────────────────────────────────────────────────────────
+[sub_resource type="StyleBoxFlat" id="MenuPanelBg"]
+bg_color = Color(0.06, 0.055, 0.09, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.45, 0.35, 0.62, 0.75)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.55)
+shadow_size = 16
+content_margin_left = 36
+content_margin_right = 36
+content_margin_top = 32
+content_margin_bottom = 32
+
+[sub_resource type="StyleBoxFlat" id="MenuBtnNormal"]
+bg_color = Color(0.11, 0.1, 0.16, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.52, 0.4, 0.72, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 5
+content_margin_left = 20
+content_margin_right = 20
+content_margin_top = 10
+content_margin_bottom = 10
+
+[sub_resource type="StyleBoxFlat" id="MenuBtnHover"]
+bg_color = Color(0.24, 0.17, 0.36, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.75, 0.58, 1.0, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.35, 0.2, 0.55, 0.45)
+shadow_size = 8
+content_margin_left = 20
+content_margin_right = 20
+content_margin_top = 10
+content_margin_bottom = 10
+
+[sub_resource type="StyleBoxFlat" id="MenuBtnPressed"]
+bg_color = Color(0.42, 0.3, 0.6, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.78, 1.0, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+content_margin_left = 20
+content_margin_right = 20
+content_margin_top = 10
+content_margin_bottom = 10
+
+[sub_resource type="StyleBoxFlat" id="MenuBtnDisabled"]
+bg_color = Color(0.08, 0.08, 0.11, 0.65)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.28, 0.28, 0.32, 0.55)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+content_margin_left = 20
+content_margin_right = 20
+content_margin_top = 10
+content_margin_bottom = 10
+
+[sub_resource type="StyleBoxFlat" id="VersionBadgeBg"]
+bg_color = Color(0.06, 0.055, 0.09, 0.82)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.45, 0.35, 0.62, 0.55)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 4
+content_margin_left = 10
+content_margin_right = 10
+content_margin_top = 4
+content_margin_bottom = 4
+
+[sub_resource type="StyleBoxFlat" id="PortraitFrameBg"]
+bg_color = Color(0.05, 0.045, 0.08, 0.75)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.55, 0.43, 0.78, 0.7)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="HudBtnNormal"]
+bg_color = Color(0.1, 0.09, 0.15, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.52, 0.4, 0.72, 0.85)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 4
+content_margin_left = 14
+content_margin_right = 14
+content_margin_top = 6
+content_margin_bottom = 6
+
+[sub_resource type="StyleBoxFlat" id="HudBtnHover"]
+bg_color = Color(0.22, 0.16, 0.34, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.72, 0.55, 0.98, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.3, 0.18, 0.5, 0.4)
+shadow_size = 6
+content_margin_left = 14
+content_margin_right = 14
+content_margin_top = 6
+content_margin_bottom = 6
+
+; ── PanelContainer (текстовые панели диалога/дневника) ────────────────────
+[sub_resource type="StyleBoxFlat" id="PanelContainerBg"]
+bg_color = Color(0.075, 0.07, 0.11, 0.95)
+border_width_left = 0
+border_width_top = 3
+border_width_right = 0
+border_width_bottom = 0
+border_color = Color(0.55, 0.43, 0.78, 0.85)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+content_margin_left = 18
+content_margin_right = 18
+content_margin_top = 12
+content_margin_bottom = 12
+
+[resource]
+default_font_size = 20
+
+Button/styles/normal = SubResource("BtnNormal")
+Button/styles/hover = SubResource("BtnHover")
+Button/styles/pressed = SubResource("BtnPressed")
+Button/styles/disabled = SubResource("BtnDisabled")
+Button/styles/focus = SubResource("BtnHover")
+Button/colors/font_color = Color(0.93, 0.90, 1.0, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_disabled_color = Color(0.5, 0.5, 0.55, 1)
+Button/font_sizes/font_size = 22
+
+Label/colors/font_color = Color(0.92, 0.90, 0.98, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.4)
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/font_sizes/font_size = 20
+
+Panel/styles/panel = SubResource("PanelBg")
+
+PanelContainer/styles/panel = SubResource("PanelContainerBg")
+
+ItemList/styles/panel = SubResource("ListBg")
+ItemList/styles/selected = SubResource("ListSelected")
+ItemList/styles/selected_focus = SubResource("ListSelected")
+ItemList/colors/font_color = Color(0.9, 0.88, 0.96, 1)
+ItemList/colors/font_selected_color = Color(1, 1, 1, 1)
+ItemList/font_sizes/font_size = 18
+ItemList/constants/v_separation = 6
+
+HSlider/styles/slider = SubResource("SliderBg")
+HSlider/styles/grabber_area = SubResource("SliderFill")
+HSlider/styles/grabber_area_highlight = SubResource("SliderFill")
+
+OptionButton/styles/normal = SubResource("BtnNormal")
+OptionButton/styles/hover = SubResource("BtnHover")
+OptionButton/styles/pressed = SubResource("BtnPressed")
+OptionButton/styles/disabled = SubResource("BtnDisabled")
+OptionButton/colors/font_color = Color(0.93, 0.90, 1.0, 1)
+OptionButton/font_sizes/font_size = 20
+
+RichTextLabel/colors/default_color = Color(0.9, 0.88, 0.96, 1)
+RichTextLabel/font_sizes/normal_font_size = 18
+
+; ── Тип-вариация "CloseButton" — используй theme_type_variation = "CloseButton"
+; на кнопках-крестиках. Компактные отступы (2px) гарантируют, что кнопка
+; не "вырастет" за пределы заданного прямоугольника, как происходит с
+; обычной Button (у неё отступы темы 18px по бокам).
+CloseButton/base_type = "Button"
+CloseButton/styles/normal = SubResource("CloseBtnNormal")
+CloseButton/styles/hover = SubResource("CloseBtnHover")
+CloseButton/styles/pressed = SubResource("CloseBtnPressed")
+CloseButton/styles/focus = SubResource("CloseBtnHover")
+CloseButton/colors/font_color = Color(0.95, 0.85, 0.87, 1)
+CloseButton/colors/font_hover_color = Color(1, 1, 1, 1)
+CloseButton/colors/font_pressed_color = Color(1, 1, 1, 1)
+CloseButton/font_sizes/font_size = 18
+
+MenuPanel/base_type = "PanelContainer"
+MenuPanel/styles/panel = SubResource("MenuPanelBg")
+
+MenuButton/base_type = "Button"
+MenuButton/styles/normal = SubResource("MenuBtnNormal")
+MenuButton/styles/hover = SubResource("MenuBtnHover")
+MenuButton/styles/pressed = SubResource("MenuBtnPressed")
+MenuButton/styles/disabled = SubResource("MenuBtnDisabled")
+MenuButton/styles/focus = SubResource("MenuBtnHover")
+MenuButton/colors/font_color = Color(0.96, 0.94, 1.0, 1)
+MenuButton/colors/font_hover_color = Color(1, 1, 1, 1)
+MenuButton/colors/font_pressed_color = Color(1, 1, 1, 1)
+MenuButton/colors/font_disabled_color = Color(0.55, 0.55, 0.6, 1)
+MenuButton/font_sizes/font_size = 22
+
+MenuTitle/base_type = "Label"
+MenuTitle/colors/font_color = Color(0.97, 0.95, 1, 1)
+MenuTitle/colors/font_shadow_color = Color(0, 0, 0, 0.75)
+MenuTitle/colors/font_outline_color = Color(0.02, 0.02, 0.05, 0.9)
+MenuTitle/constants/shadow_offset_x = 0
+MenuTitle/constants/shadow_offset_y = 2
+MenuTitle/constants/outline_size = 3
+MenuTitle/font_sizes/font_size = 42
+
+MenuSubtitle/base_type = "Label"
+MenuSubtitle/colors/font_color = Color(0.82, 0.78, 0.92, 1)
+MenuSubtitle/colors/font_shadow_color = Color(0, 0, 0, 0.6)
+MenuSubtitle/colors/font_outline_color = Color(0.02, 0.02, 0.05, 0.7)
+MenuSubtitle/constants/shadow_offset_x = 0
+MenuSubtitle/constants/shadow_offset_y = 1
+MenuSubtitle/constants/outline_size = 2
+MenuSubtitle/font_sizes/font_size = 18
+
+MenuEyebrow/base_type = "Label"
+MenuEyebrow/colors/font_color = Color(0.72, 0.6, 0.95, 1)
+MenuEyebrow/colors/font_shadow_color = Color(0, 0, 0, 0.5)
+MenuEyebrow/constants/shadow_offset_x = 0
+MenuEyebrow/constants/shadow_offset_y = 1
+MenuEyebrow/font_sizes/font_size = 15
+
+PortraitFrame/base_type = "Panel"
+PortraitFrame/styles/panel = SubResource("PortraitFrameBg")
+
+VersionBadge/base_type = "Panel"
+VersionBadge/styles/panel = SubResource("VersionBadgeBg")
+
+HudButton/base_type = "Button"
+HudButton/styles/normal = SubResource("HudBtnNormal")
+HudButton/styles/hover = SubResource("HudBtnHover")
+HudButton/styles/pressed = SubResource("BtnPressed")
+HudButton/styles/focus = SubResource("HudBtnHover")
+HudButton/colors/font_color = Color(0.94, 0.91, 1.0, 1)
+HudButton/colors/font_hover_color = Color(1, 1, 1, 1)
+HudButton/font_sizes/font_size = 18

@@ -1,0 +1,28 @@
+## Character01.gd
+## Персонаж: Виктор Ларин
+extends CharacterBase
+
+func _setup_character() -> void:
+	character_id     = "character_01"
+	character_sprite = preload("res://assets/characters/character_01.png")
+
+	## Диалоги: заполни под свой сюжет.
+	## Используй DialogueData.make_dialogue() для удобства.
+	dialogues = [
+		{
+			"id":           "dlg_01_intro",
+			"character_id": "character_01",
+			"lines": [
+				{
+					"speaker":       "Виктор Ларин",
+					"text":          "Здравствуйте, инспектор. Чем могу помочь?",
+					"portrait_path": "res://assets/characters/character_01_portrait.png"
+				},
+				{
+					"speaker":       "Инспектор",
+					"text":          "Мне нужно задать вам несколько вопросов.",
+					"portrait_path": ""
+				},
+			]
+		},
+	]
