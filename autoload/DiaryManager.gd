@@ -71,14 +71,48 @@ func _init_characters() -> void:
 
 
 func _init_evidence() -> void:
-	## Заготовка: 10 улик. Заполни под свой сюжет.
+	var preset_evidence := [
+		{
+			"id": "evidence_01",
+			"title": "Визитка Крамера",
+			"description": "Небольшая визитка с именем и телефоном. На ней заметно выцвело имя человека, который, похоже, был здесь недавно.",
+			"location_found": "Номер 304",
+			"circumstances": "Лежит на тумбе у окна, будто её кто-то оставил в спешке."
+		},
+		{
+			"id": "evidence_02",
+			"title": "Нить кашемира",
+			"description": "Тонкая нить тёмного кашемира, похожая на нитку от пальто или шарфа.",
+			"location_found": "У кровати",
+			"circumstances": "Зацепилась за край тумбы, как будто кто-то резко прошёл рядом."
+		},
+		{
+			"id": "evidence_03",
+			"title": "Пепельница с окурками",
+			"description": "Пепельница, в которой лежат три окурка с характерным ароматом табака.",
+			"location_found": "На столике у двери",
+			"circumstances": "Окурки ещё свежие, а пепельница поставлена не на своём месте."
+		},
+		{
+			"id": "evidence_04",
+			"title": "Царапина на замке",
+			"description": "На дверном замке заметна свежая царапина, будто кто-то пытался открыть дверь с силой.",
+			"location_found": "Дверь номера",
+			"circumstances": "Следы выглядят слишком свежими, чтобы быть случайными."
+		},
+	]
+
 	for i in range(1, 11):
 		var id := "evidence_%02d" % i
+		var preset: Dictionary = {}
+		if i <= preset_evidence.size():
+			preset = preset_evidence[i - 1]
+
 		evidence[id] = {
-			"title":          "Улика %d" % i,
-			"description":    "Подробное описание улики %d." % i,
-			"location_found": "Локация X",
-			"circumstances":  "Обстоятельства обнаружения улики %d." % i,
+			"title":          preset.get("title", "Улика %d" % i),
+			"description":    preset.get("description", "Подробное описание улики %d." % i),
+			"location_found": preset.get("location_found", "Локация X"),
+			"circumstances":  preset.get("circumstances", "Обстоятельства обнаружения улики %d." % i),
 			"discovered":     false,
 		}
 

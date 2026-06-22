@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://qev8vh1wvbal"]
+
+[ext_resource type="Script" uid="uid://bkfs4l0encf5c" path="res://scripts/TitleCard.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://dn31cef8r87kt" path="res://assets/locations/room_304.jpg" id="2"]
+[ext_resource type="FontFile" uid="uid://cky23c0jkfbqp" path="res://assets/fonts/PTMono-Regular.ttf" id="3"]
+
+[node name="TitleCard" type="Control" unique_id=1580199532]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Background" type="TextureRect" parent="." unique_id=648177455]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2")
+expand_mode = 1
+
+[node name="Caption" type="Label" parent="." unique_id=1497795425]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 130.0
+offset_top = -260.0
+offset_right = 950.0
+offset_bottom = -120.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.85)
+theme_override_constants/line_spacing = 12
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3")
+theme_override_font_sizes/font_size = 44
+text = "Номер 304.
+14 мая, 10:30"
+vertical_alignment = 1

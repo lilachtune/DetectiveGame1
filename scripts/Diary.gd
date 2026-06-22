@@ -121,8 +121,13 @@ func _show_evidence() -> void:
 
 func _populate_locations() -> void:
 	location_list.clear()
+	var labels := {
+		"location_01": "Комната №304",
+		"location_02": "Коридор",
+	}
 	for loc_id in DiaryManager.discovered_locations:
-		location_list.add_item("📍 " + loc_id.replace("_", " ").capitalize())
+		var label: String = labels.get(loc_id, loc_id.replace("_", " ").capitalize())
+		location_list.add_item("📍 " + label)
 
 func _populate_characters() -> void:
 	char_list.clear()
@@ -190,8 +195,8 @@ func _show_evidence_detail(ev_id: String) -> void:
 
 	evidence_title_label.text = "🔍  " + d.get("title", "Улика")
 	var txt := "[b]Описание:[/b]\n%s\n\n" % d.get("description", "")
-	txt += "[b]Где найдено:[/b] %s\n\n" % d.get("location_found", "—")
-	txt += "[b]Обстоятельства:[/b] %s" % d.get("circumstances", "—")
+	txt += "[b]Где найдено:[/b] \n%s\n\n" % d.get("location_found", "—")
+	txt += "[b]Обстоятельства:[/b] \n%s" % d.get("circumstances", "—")
 	evidence_detail_text.text = txt
 
 	evidence_detail_overlay.visible = true

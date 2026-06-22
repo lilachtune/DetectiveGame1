@@ -39,7 +39,7 @@ func travel_to_location(location_name: String) -> void:
 	location_changed.emit(location_name)
 
 
-## Начать новую игру — сбрасывает все данные.
+## Начать новую игру — сбрасывает все данные и показывает вступительный эпилог.
 func start_new_game() -> void:
 	game_started    = true
 	story_completed = false
@@ -47,7 +47,7 @@ func start_new_game() -> void:
 	DiaryManager.reset()
 	SaveManager.clear_save()
 	change_state(GameState.PLAYING)
-	get_tree().change_scene_to_file("res://scenes/locations/Location01.tscn")
+	get_tree().change_scene_to_file("res://scenes/Epilogue.tscn")
 
 
 ## Продолжить игру из сохранения.

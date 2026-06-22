@@ -57,9 +57,22 @@ func _apply_background() -> void:
 	if not background or not background_texture:
 		return
 	if background is Sprite2D:
-		(background as Sprite2D).texture = background_texture
+		var sprite: Sprite2D = background as Sprite2D
+		sprite.texture = background_texture
+		var viewport_size: Vector2 = get_viewport_rect().size
+		if viewport_size.x > 0.0 and viewport_size.y > 0.0:
+			var tex_size: Vector2 = background_texture.get_size()
+			var scale_factor: float = max(viewport_size.x / tex_size.x, viewport_size.y / tex_size.y)
+			sprite.centered = true
+			sprite.offset = Vector2.ZERO
+			sprite.position = viewport_size / 2.0
+			sprite.scale = Vector2.ONE * scale_factor
 	elif background is TextureRect:
-		(background as TextureRect).texture = background_texture
+		var rect := background as TextureRect
+		rect.texture = background_texture
+		rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+		rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+		rect.stretch_mode = TextureRect.STRETCH_SCALE
 
 # ─── Ввод ─────────────────────────────────────────────────────────────────────
 

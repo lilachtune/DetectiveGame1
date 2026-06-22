@@ -4,9 +4,8 @@ extends LocationBase
 
 func _ready() -> void:
 	location_id   = "location_02"
-	location_name = "Библиотека"
-	background_texture = preload("res://assets/locations/location_02.png")
-	## Переходы: exits = { "В библиотеку": "Location02" }
+	location_name = "Коридор"
+	background_texture = preload("res://assets/locations/room_304.jpg")
 	super._ready()
 
 func _setup_location() -> void:
