@@ -1,0 +1,4 @@
+res://autoload/DiaryManager.gd
+res://scenes/TitleCard.tscn
+res://resources/theme/GameTheme.tres
+res://scripts/LocationBase.gd
