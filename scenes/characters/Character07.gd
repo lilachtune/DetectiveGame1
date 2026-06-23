@@ -1,6 +1,6 @@
 ## Character07.gd
 ## Персонаж: Антон Волков
-extends CharacterBase
+extends "res://scripts/CharacterBase.gd"
 
 func _setup_character() -> void:
 	character_id     = "character_07"

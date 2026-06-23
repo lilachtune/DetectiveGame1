@@ -6,7 +6,6 @@
 ##   ├─ Sprite2D                  ← PNG-спрайт персонажа
 ##   └─ ClickArea (Area2D)
 ##       └─ CollisionShape2D
-class_name CharacterBase
 extends Node2D
 
 @export var character_id:     String     = "character_01"
@@ -66,13 +65,13 @@ func _try_start_next_dialogue() -> void:
 	var idx := clampi(_dialogue_index, 0, dialogues.size() - 1)
 	var data: Dictionary = dialogues[idx]
 
-	var location := _get_parent_location()
-	if location:
-		# Подключаем сигнал окончания диалога для продвижения счётчика
-		if location.dialogue_box and \
-				not location.dialogue_box.dialogue_finished.is_connected(_on_dialogue_done):
-			location.dialogue_box.dialogue_finished.connect(_on_dialogue_done, CONNECT_ONE_SHOT)
-		location.start_dialogue(data)
+	var location: Node = _get_parent_location()
+	if location and location.has_method("start_dialogue"):
+		var dialogue_box = location.get("dialogue_box")
+		if dialogue_box and dialogue_box.has_signal("dialogue_finished") and \
+				not dialogue_box.dialogue_finished.is_connected(_on_dialogue_done):
+			dialogue_box.dialogue_finished.connect(_on_dialogue_done, CONNECT_ONE_SHOT)
+		location.call("start_dialogue", data)
 
 func _on_dialogue_done(_id: String) -> void:
 	if _dialogue_index < dialogues.size() - 1:
@@ -80,11 +79,11 @@ func _on_dialogue_done(_id: String) -> void:
 
 # ─── Утилиты ──────────────────────────────────────────────────────────────────
 
-func _get_parent_location() -> LocationBase:
-	var node := get_parent()
+func _get_parent_location() -> Node:
+	var node: Node = get_parent()
 	while node:
-		if node is LocationBase:
-			return node as LocationBase
+		if node.has_method("start_dialogue") and node.has_method("_apply_background"):
+			return node
 		node = node.get_parent()
 	return null
 

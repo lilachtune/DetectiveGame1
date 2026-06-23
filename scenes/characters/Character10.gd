@@ -1,6 +1,6 @@
 ## Character10.gd
 ## Персонаж: Алиса Зайцева
-extends CharacterBase
+extends "res://scripts/CharacterBase.gd"
 
 func _setup_character() -> void:
 	character_id     = "character_10"

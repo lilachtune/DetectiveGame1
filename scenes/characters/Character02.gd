@@ -1,6 +1,6 @@
 ## Character02.gd
 ## Персонаж: Марина Ларина
-extends CharacterBase
+extends "res://scripts/CharacterBase.gd"
 
 func _setup_character() -> void:
 	character_id     = "character_02"

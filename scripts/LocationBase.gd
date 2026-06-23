@@ -11,7 +11,6 @@
 ##       ├─ DialogueBox  (instance DialogueBox.tscn)
 ##       ├─ PauseMenu    (instance PauseMenu.tscn)
 ##       └─ Diary        (instance Diary.tscn)
-class_name LocationBase
 extends Node2D
 
 @export var location_id:        String       = "location_01"
@@ -30,6 +29,13 @@ extends Node2D
 @onready var diary_button:  Button      = $UI/DiaryButton
 
 var is_busy: bool = false
+var diary_overlay: Control = null
+
+const DIARY_HOTSPOTS := {
+	"locations": {"rect": Rect2(925, 327, 515, 124), "label": "Локации"},
+	"characters": {"rect": Rect2(925, 494, 515, 119), "label": "Персонажи"},
+	"evidence": {"rect": Rect2(925, 656, 515, 124), "label": "Улики"},
+}
 
 # ─── Инициализация ────────────────────────────────────────────────────────────
 
@@ -42,7 +48,11 @@ func _ready() -> void:
 
 	if diary_button:
 		diary_button.theme_type_variation = &"HudButton"
-		diary_button.text = "Дневник"
+		diary_button.text = ""
+		diary_button.icon = preload("res://assets/icon_diary.png")
+		diary_button.expand_icon = true
+		diary_button.flat = true
+		diary_button.custom_minimum_size = Vector2(72, 72)
 		diary_button.pressed.connect(_open_diary)
 
 	if dialogue_box and dialogue_box.has_signal("dialogue_finished"):
@@ -115,8 +125,82 @@ func _is_diary_open() -> bool:
 # ─── Дневник ──────────────────────────────────────────────────────────────────
 
 func _open_diary() -> void:
-	if diary and diary.has_method("open"):
-		diary.open()
+	if diary_overlay != null:
+		_close_diary_overlay()
+		return
+	if diary and diary.has_method("close"):
+		diary.close()
+	_show_diary_image_overlay()
+
+func _show_diary_image_overlay() -> void:
+	if diary_overlay != null:
+		return
+	is_busy = true
+
+	diary_overlay = Control.new()
+	diary_overlay.name = "DiaryImageOverlay"
+	diary_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	diary_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	ui_layer.add_child(diary_overlay)
+
+	var dim := ColorRect.new()
+	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	dim.color = Color(0.0, 0.0, 0.0, 0.8)
+	diary_overlay.add_child(dim)
+
+	var image_rect := TextureRect.new()
+	image_rect.texture = preload("res://assets/ui/diary.png")
+	image_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	image_rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+	image_rect.stretch_mode = TextureRect.STRETCH_SCALE
+	image_rect.mouse_filter = Control.MOUSE_FILTER_STOP
+	image_rect.gui_input.connect(_on_diary_image_input)
+	diary_overlay.add_child(image_rect)
+
+func _on_diary_image_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
+		var pos: Vector2 = (event as InputEventMouseButton).position
+		var close_rect: Rect2 = Rect2(1675, 50, 207, 99)
+		if close_rect.has_point(pos):
+			_close_diary_overlay()
+			return
+
+	if event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
+		var pos: Vector2 = (event as InputEventMouseButton).position
+		var image_rect: TextureRect = diary_overlay.get_child(1) if diary_overlay != null and diary_overlay.get_child_count() > 1 else null
+		if image_rect == null:
+			return
+		var image_size: Vector2 = image_rect.texture.get_size()
+		var control_size: Vector2 = image_rect.get_rect().size
+		var scale_factor: float = min(control_size.x / image_size.x, control_size.y / image_size.y)
+		var drawn_size: Vector2 = image_size * scale_factor
+		var offset: Vector2 = (control_size - drawn_size) / 2.0
+		var image_pos: Vector2 = (pos - offset) / scale_factor
+		for hotspot_id in DIARY_HOTSPOTS.keys():
+			var hotspot_data: Dictionary = DIARY_HOTSPOTS[hotspot_id]
+			var rect: Rect2 = hotspot_data.get("rect", Rect2())
+			if rect.has_point(image_pos):
+				_show_diary_hotspot_feedback(hotspot_data.get("label", hotspot_id))
+				return
+
+func _show_diary_hotspot_feedback(label: String) -> void:
+	var feedback := Label.new()
+	feedback.text = label
+	feedback.add_theme_font_size_override("font_size", 26)
+	feedback.modulate = Color(1.0, 0.95, 0.4, 1.0)
+	feedback.position = Vector2(100, 100)
+	diary_overlay.add_child(feedback)
+	var tween := create_tween()
+	tween.tween_property(feedback, "modulate:a", 0.0, 0.8).set_delay(0.8)
+	tween.tween_callback(feedback.queue_free)
+
+func _close_diary_overlay() -> void:
+	if diary_overlay != null:
+		diary_overlay.queue_free()
+		diary_overlay = null
+	if diary and diary.has_method("close"):
+		diary.close()
+	is_busy = false
 
 # ─── Диалоги ──────────────────────────────────────────────────────────────────
 

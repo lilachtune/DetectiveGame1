@@ -1,6 +1,6 @@
 ## Location14.gd
 ## Локация: Ванная комната
-extends LocationBase
+extends "res://scripts/LocationBase.gd"
 
 func _ready() -> void:
 	location_id   = "location_14"

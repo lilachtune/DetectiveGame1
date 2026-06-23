@@ -1,6 +1,6 @@
 ## Character06.gd
 ## Персонаж: Светлана Орлова
-extends CharacterBase
+extends "res://scripts/CharacterBase.gd"
 
 func _setup_character() -> void:
 	character_id     = "character_06"

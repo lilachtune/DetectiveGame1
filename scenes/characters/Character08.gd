@@ -1,6 +1,6 @@
 ## Character08.gd
 ## Персонаж: Наталья Белова
-extends CharacterBase
+extends "res://scripts/CharacterBase.gd"
 
 func _setup_character() -> void:
 	character_id     = "character_08"

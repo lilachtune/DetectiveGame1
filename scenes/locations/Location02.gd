@@ -1,6 +1,6 @@
 ## Location02.gd
 ## Локация: Библиотека
-extends LocationBase
+extends "res://scripts/LocationBase.gd"
 
 func _ready() -> void:
 	location_id   = "location_02"

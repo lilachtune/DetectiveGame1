@@ -1,6 +1,6 @@
 ## Character01.gd
 ## Персонаж: Виктор Ларин
-extends CharacterBase
+extends "res://scripts/CharacterBase.gd"
 
 func _setup_character() -> void:
 	character_id     = "character_01"

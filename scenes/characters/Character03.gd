@@ -1,6 +1,6 @@
 ## Character03.gd
 ## Персонаж: Дмитрий Соколов
-extends CharacterBase
+extends "res://scripts/CharacterBase.gd"
 
 func _setup_character() -> void:
 	character_id     = "character_03"
