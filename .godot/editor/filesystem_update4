@@ -2,3 +2,9 @@ res://autoload/DiaryManager.gd
 res://scenes/TitleCard.tscn
 res://resources/theme/GameTheme.tres
 res://scripts/LocationBase.gd
+res://scenes/locations/Location01.gd
+res://scripts/Diary.gd
+res://scenes/ui/DiaryHotspots.tscn
+res://scenes/ui/DiaryLocations.tscn
+res://scripts/DiaryLocations.gd
+res://scenes/ui/Settings.tscn

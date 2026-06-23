@@ -8,6 +8,28 @@ extends Node
 ## Открытые локации (массив ID)
 var discovered_locations: Array[String] = []
 
+## Порядок открытия локаций по сюжету
+const LOCATION_ORDER: Array[String] = [
+	"location_01",  # Комната №304
+	"location_02",  # Коридор
+	"location_03",  # Кабинет
+	"location_04",  # Кухня
+	"location_05",  # Столовая
+	"location_06",  # Главная спальня
+	"location_07",  # Гостевая спальня
+	"location_08",  # Подвал
+	"location_09",  # Чердак
+	"location_10",  # Сад
+	"location_11",  # Гараж
+	"location_12",  # Бальный зал
+	"location_13",  # Коридор второго этажа
+	"location_14",  # Ванная комната
+	"location_15",  # Беседка
+]
+
+## Текущий индекс разблокированной локации (сколько локаций доступно)
+var unlocked_location_index: int = 0
+
 ## Персонажи: { char_id -> CharacterRecord }
 ## CharacterRecord = {
 ##   name, surname, info, motive, alibi, photo_path,
@@ -136,6 +158,11 @@ func _init_evidence() -> void:
 func discover_location(location_id: String) -> void:
 	if location_id not in discovered_locations:
 		discovered_locations.append(location_id)
+		# Обновляем индекс разблокированных локаций
+		if location_id in LOCATION_ORDER:
+			var new_index: int = LOCATION_ORDER.find(location_id) + 1
+			if new_index > unlocked_location_index:
+				unlocked_location_index = new_index
 		diary_updated.emit()
 
 
@@ -199,15 +226,17 @@ func get_dialogues_for_character(char_id: String) -> Array:
 
 func get_save_data() -> Dictionary:
 	return {
-		"discovered_locations": discovered_locations,
-		"characters":           characters,
-		"evidence":             evidence,
-		"dialogue_history":     dialogue_history,
+		"discovered_locations":  discovered_locations,
+		"unlocked_location_index": unlocked_location_index,
+		"characters":            characters,
+		"evidence":              evidence,
+		"dialogue_history":      dialogue_history,
 	}
 
 
 func load_save_data(data: Dictionary) -> void:
 	discovered_locations = Array(data.get("discovered_locations", []), TYPE_STRING, "", null)
+	unlocked_location_index = data.get("unlocked_location_index", 0)
 
 	var saved_chars: Dictionary = data.get("characters", {})
 	for cid in saved_chars:
@@ -225,6 +254,7 @@ func load_save_data(data: Dictionary) -> void:
 
 func reset() -> void:
 	discovered_locations = []
+	unlocked_location_index = 0
 	dialogue_history     = {}
 	_init_characters()
 	_init_evidence()

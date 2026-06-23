@@ -63,6 +63,10 @@ extends Control
 var _ending_test_scene: PackedScene = preload("res://scenes/ui/EndingTest.tscn")
 var _ending_test_instance: Control  = null
 
+# Изображение спрайта локаций на фоне панели locations_panel
+var _locations_bg: TextureRect = null
+const LOCATIONS_IMAGE_PATH := "res://assets/ui/diary_locations.png"
+
 # ─── Инициализация ────────────────────────────────────────────────────────────
 
 func _ready() -> void:
@@ -74,7 +78,7 @@ func _ready() -> void:
 	tab_characters.pressed.connect(_show_characters)
 	tab_evidence.pressed.connect(_show_evidence)
 
-	# Подключаем сигналы списков один раз (не при каждом populate)
+	# Подключаем сигналы списков один раз
 	char_list.item_selected.connect(_on_char_selected)
 	evidence_list.item_selected.connect(_on_evidence_selected)
 	btn_test.pressed.connect(_open_ending_test)
@@ -84,6 +88,40 @@ func _ready() -> void:
 	evidence_detail_overlay.visible = false
 
 	DiaryManager.diary_updated.connect(_refresh_current)
+	
+	# Создаём фон для панели локаций (скрытый по умолчанию)
+	_create_locations_background()
+
+# ─── Создание фона локаций ──────────────────────────────────────────────────
+
+func _create_locations_background() -> void:
+	_locations_bg = TextureRect.new()
+	_locations_bg.name = "LocationsBg"
+	_locations_bg.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_locations_bg.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+	_locations_bg.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	_locations_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_locations_bg.visible = false
+	
+	var tex := _load_locations_texture()
+	if tex:
+		_locations_bg.texture = tex
+	else:
+		_locations_bg.texture = _create_placeholder_texture()
+	
+	locations_panel.add_child(_locations_bg)
+
+func _load_locations_texture() -> Texture2D:
+	if ResourceLoader.exists(LOCATIONS_IMAGE_PATH):
+		return load(LOCATIONS_IMAGE_PATH)
+	return null
+
+func _create_placeholder_texture() -> Texture2D:
+	var image := Image.create(800, 600, false, Image.FORMAT_RGBA8)
+	image.fill(Color(0.15, 0.12, 0.2, 1.0))
+	var tex := ImageTexture.new()
+	tex.set_image(image)
+	return tex
 
 # ─── Открытие / Закрытие ─────────────────────────────────────────────────────
 
@@ -101,11 +139,15 @@ func _hide_all() -> void:
 	characters_panel.visible = false
 	evidence_panel.visible   = false
 	char_detail.visible      = false
+	if _locations_bg:
+		_locations_bg.visible = false
 
 func _show_locations() -> void:
 	_hide_all()
 	locations_panel.visible = true
 	_populate_locations()
+	if _locations_bg:
+		_locations_bg.visible = true
 
 func _show_characters() -> void:
 	_hide_all()
@@ -121,13 +163,50 @@ func _show_evidence() -> void:
 
 func _populate_locations() -> void:
 	location_list.clear()
+	
+	# Названия локаций
 	var labels := {
 		"location_01": "Комната №304",
 		"location_02": "Коридор",
+		"location_03": "Кабинет",
+		"location_04": "Кухня",
+		"location_05": "Столовая",
+		"location_06": "Главная спальня",
+		"location_07": "Гостевая спальня",
+		"location_08": "Подвал",
+		"location_09": "Чердак",
+		"location_10": "Сад",
+		"location_11": "Гараж",
+		"location_12": "Бальный зал",
+		"location_13": "Коридор второго этажа",
+		"location_14": "Ванная комната",
+		"location_15": "Беседка",
 	}
-	for loc_id in DiaryManager.discovered_locations:
-		var label: String = labels.get(loc_id, loc_id.replace("_", " ").capitalize())
-		location_list.add_item("📍 " + label)
+	
+	var total := DiaryManager.LOCATION_ORDER.size()
+	var unlocked := DiaryManager.unlocked_location_index
+	
+	for i in range(total):
+		var loc_id := DiaryManager.LOCATION_ORDER[i]
+		var is_unlocked := i < unlocked
+		var is_current := i == unlocked - 1
+		
+		var display_text: String
+		if is_unlocked:
+			display_text = "🌐 %s" % labels.get(loc_id, loc_id)
+		elif is_current:
+			display_text = "🔒 %s (текущая)" % labels.get(loc_id, loc_id)
+		else:
+			display_text = "⬛ %s" % labels.get(loc_id, loc_id)
+		
+		location_list.add_item(display_text)
+		# Отмечаем цветом: unlocked - белый, current - голубой, locked - серый
+		if is_unlocked:
+			location_list.set_item_custom_fg_color(i, Color(1.0, 0.95, 0.85))
+		elif is_current:
+			location_list.set_item_custom_fg_color(i, Color(0.7, 0.8, 1.0))
+		else:
+			location_list.set_item_custom_fg_color(i, Color(0.4, 0.4, 0.4))
 
 func _populate_characters() -> void:
 	char_list.clear()

@@ -1,25 +1,29 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://ct38aikpdjrmw"]
 
-[ext_resource type="Script" path="res://scripts/Settings.gd" id="1"]
+[ext_resource type="Script" uid="uid://6c8c6kjmxofk" path="res://scripts/Settings.gd" id="1"]
 
-[node name="Settings" type="Control"]
+[node name="Settings" type="Control" unique_id=1209896068]
+visible = false
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-visible = false
 mouse_filter = 1
 script = ExtResource("1")
 
-[node name="Overlay" type="ColorRect" parent="."]
+[node name="Overlay" type="ColorRect" parent="." unique_id=1566316532]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0, 0, 0, 0.6)
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
+color = Color(0, 0, 0, 0.6)
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=2117499416]
 layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -28,27 +32,25 @@ offset_left = -260.0
 offset_top = -130.0
 offset_right = 260.0
 offset_bottom = 130.0
-mouse_filter = 0
 
-[node name="BtnClose" type="Button" parent="Panel"]
+[node name="BtnClose" type="Button" parent="Panel" unique_id=1866307445]
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 1
+anchors_preset = 1
 anchor_left = 1.0
-anchor_top = 0.0
 anchor_right = 1.0
-anchor_bottom = 0.0
 offset_left = -58.0
 offset_top = 16.0
-offset_right = -18.0
-offset_bottom = 56.0
-custom_minimum_size = Vector2(40, 40)
+offset_right = -12.855011
+offset_bottom = 61.205
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_type_variation = &"CloseButton"
-mouse_filter = 0
 text = "✕"
 
-[node name="VBox" type="VBoxContainer" parent="Panel"]
+[node name="VBox" type="VBoxContainer" parent="Panel" unique_id=1763178815]
 layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 24.0
@@ -57,43 +59,40 @@ offset_right = -24.0
 offset_bottom = -24.0
 theme_override_constants/separation = 24
 
-[node name="Title" type="Label" parent="Panel/VBox"]
+[node name="Title" type="Label" parent="Panel/VBox" unique_id=919618754]
 layout_mode = 2
-text = "НАСТРОЙКИ ЗВУКА"
-horizontal_alignment = 1
-theme_override_font_sizes/font_size = 26
 theme_override_colors/font_color = Color(0.97, 0.95, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.45)
 theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 26
+text = "НАСТРОЙКИ ЗВУКА"
+horizontal_alignment = 1
 
-[node name="TitleDivider" type="ColorRect" parent="Panel/VBox"]
-layout_mode = 2
+[node name="TitleDivider" type="ColorRect" parent="Panel/VBox" unique_id=1221378770]
 custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
 color = Color(0.62, 0.46, 0.92, 0.4)
 
-[node name="Row_Master" type="HBoxContainer" parent="Panel/VBox"]
+[node name="Row_Master" type="HBoxContainer" parent="Panel/VBox" unique_id=1006836574]
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="LabelMaster" type="Label" parent="Panel/VBox/Row_Master"]
-layout_mode = 2
+[node name="LabelMaster" type="Label" parent="Panel/VBox/Row_Master" unique_id=682317894]
 custom_minimum_size = Vector2(170, 0)
-size_flags_vertical = 4
+layout_mode = 2
 text = "Громкость:"
 
-[node name="MasterSlider" type="HSlider" parent="Panel/VBox/Row_Master"]
+[node name="MasterSlider" type="HSlider" parent="Panel/VBox/Row_Master" unique_id=1968105608]
+custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-custom_minimum_size = Vector2(0, 24)
-min_value = 0.0
 max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="MasterValue" type="Label" parent="Panel/VBox/Row_Master"]
-layout_mode = 2
+[node name="MasterValue" type="Label" parent="Panel/VBox/Row_Master" unique_id=46153179]
 custom_minimum_size = Vector2(60, 0)
-size_flags_vertical = 4
+layout_mode = 2
 text = "100%"
 horizontal_alignment = 2

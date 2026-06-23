@@ -31,11 +31,9 @@ extends Node2D
 var is_busy: bool = false
 var diary_overlay: Control = null
 
-const DIARY_HOTSPOTS := {
-	"locations": {"rect": Rect2(925, 327, 515, 124), "label": "Локации"},
-	"characters": {"rect": Rect2(925, 494, 515, 119), "label": "Персонажи"},
-	"evidence": {"rect": Rect2(925, 656, 515, 124), "label": "Улики"},
-}
+# Готовая сцена с кнопками на изображении diary.png
+const HOTSPOTS_SCENE := preload("res://scenes/ui/DiaryHotspots.tscn")
+const LOCATIONS_SCENE := preload("res://scenes/ui/DiaryLocations.tscn")
 
 # ─── Инициализация ────────────────────────────────────────────────────────────
 
@@ -61,7 +59,7 @@ func _ready() -> void:
 	_setup_location()
 
 func _setup_location() -> void:
-	pass  # Переопределить в дочерних сценах
+	pass
 
 func _apply_background() -> void:
 	if not background or not background_texture:
@@ -87,14 +85,16 @@ func _apply_background() -> void:
 # ─── Ввод ─────────────────────────────────────────────────────────────────────
 
 func _input(event: InputEvent) -> void:
-	# Escape открывает/закрывает паузу, только не во время диалога
 	if event.is_action_pressed("ui_cancel"):
+		if diary_overlay != null:
+			_close_diary_overlay()
+			get_viewport().set_input_as_handled()
+			return
 		if not is_busy:
 			_toggle_pause()
 		get_viewport().set_input_as_handled()
 		return
 
-	# ЛКМ — передать локации, только если не занято и пауза не открыта
 	if event is InputEventMouseButton \
 			and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT \
 			and (event as InputEventMouseButton).pressed \
@@ -103,7 +103,6 @@ func _input(event: InputEvent) -> void:
 			and not _is_diary_open():
 		_on_scene_clicked((event as InputEventMouseButton).position)
 
-## Переопределить для обработки кликов по сцене.
 func _on_scene_clicked(pos: Vector2) -> void:
 	pass
 
@@ -146,46 +145,46 @@ func _show_diary_image_overlay() -> void:
 	var dim := ColorRect.new()
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
 	dim.color = Color(0.0, 0.0, 0.0, 0.8)
+	dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	diary_overlay.add_child(dim)
 
-	var image_rect := TextureRect.new()
-	image_rect.texture = preload("res://assets/ui/diary.png")
-	image_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
-	image_rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
-	image_rect.stretch_mode = TextureRect.STRETCH_SCALE
-	image_rect.mouse_filter = Control.MOUSE_FILTER_STOP
-	image_rect.gui_input.connect(_on_diary_image_input)
-	diary_overlay.add_child(image_rect)
+	# Загружаем готовую сцену с кнопками на diary.png
+	var hotspots: Control = HOTSPOTS_SCENE.instantiate()
+	hotspots.name = "DiaryHotspots"
+	diary_overlay.add_child(hotspots)
+	
+	# Подключаем сигналы кнопок (невидимые области)
+	var btn_locations: Button = hotspots.get_node("BtnLocations")
+	var btn_characters: Button = hotspots.get_node("BtnCharacters")
+	var btn_evidence: Button = hotspots.get_node("BtnEvidence")
+	var btn_close: Button = hotspots.get_node("BtnClose")
+	
+	btn_locations.pressed.connect(_on_locations_pressed)
+	btn_characters.pressed.connect(_on_characters_pressed)
+	btn_evidence.pressed.connect(_on_evidence_pressed)
+	btn_close.pressed.connect(_close_diary_overlay)
+	
+	# Подключаем сигналы кнопок с текстом (BtnXxxLabel)
+	var btn_locations_label: Button = hotspots.get_node("BtnLocationsLabel")
+	var btn_characters_label: Button = hotspots.get_node("BtnCharactersLabel")
+	var btn_evidence_label: Button = hotspots.get_node("BtnEvidenceLabel")
+	
+	btn_locations_label.pressed.connect(_on_locations_pressed)
+	btn_characters_label.pressed.connect(_on_characters_pressed)
+	btn_evidence_label.pressed.connect(_on_evidence_pressed)
 
-func _on_diary_image_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
-		var pos: Vector2 = (event as InputEventMouseButton).position
-		var close_rect: Rect2 = Rect2(1675, 50, 207, 99)
-		if close_rect.has_point(pos):
-			_close_diary_overlay()
-			return
+func _on_locations_pressed() -> void:
+	_show_locations_overlay()
 
-	if event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
-		var pos: Vector2 = (event as InputEventMouseButton).position
-		var image_rect: TextureRect = diary_overlay.get_child(1) if diary_overlay != null and diary_overlay.get_child_count() > 1 else null
-		if image_rect == null:
-			return
-		var image_size: Vector2 = image_rect.texture.get_size()
-		var control_size: Vector2 = image_rect.get_rect().size
-		var scale_factor: float = min(control_size.x / image_size.x, control_size.y / image_size.y)
-		var drawn_size: Vector2 = image_size * scale_factor
-		var offset: Vector2 = (control_size - drawn_size) / 2.0
-		var image_pos: Vector2 = (pos - offset) / scale_factor
-		for hotspot_id in DIARY_HOTSPOTS.keys():
-			var hotspot_data: Dictionary = DIARY_HOTSPOTS[hotspot_id]
-			var rect: Rect2 = hotspot_data.get("rect", Rect2())
-			if rect.has_point(image_pos):
-				_show_diary_hotspot_feedback(hotspot_data.get("label", hotspot_id))
-				return
+func _on_characters_pressed() -> void:
+	_show_diary_feedback("Персонажи")
 
-func _show_diary_hotspot_feedback(label: String) -> void:
+func _on_evidence_pressed() -> void:
+	_show_diary_feedback("Улики")
+
+func _show_diary_feedback(text: String) -> void:
 	var feedback := Label.new()
-	feedback.text = label
+	feedback.text = text
 	feedback.add_theme_font_size_override("font_size", 26)
 	feedback.modulate = Color(1.0, 0.95, 0.4, 1.0)
 	feedback.position = Vector2(100, 100)
@@ -193,6 +192,41 @@ func _show_diary_hotspot_feedback(label: String) -> void:
 	var tween := create_tween()
 	tween.tween_property(feedback, "modulate:a", 0.0, 0.8).set_delay(0.8)
 	tween.tween_callback(feedback.queue_free)
+
+# ─── Отображение локаций ────────────────────────────────────────────────────
+
+func _show_locations_overlay() -> void:
+	if not diary_overlay:
+		return
+	
+	# Удаляем старый слой с кнопками дневника
+	var old_hotspots := diary_overlay.get_node_or_null("DiaryHotspots")
+	if old_hotspots:
+		old_hotspots.queue_free()
+	
+	# Загружаем готовую сцену с изображением локаций и списком
+	var locations_scene: Control = LOCATIONS_SCENE.instantiate()
+	locations_scene.name = "DiaryLocationsScene"
+	
+	# Если файла diary_locations.png нет — используем заглушку
+	var tex := load("res://assets/ui/diary_locations.png")
+	if not tex:
+		var img := Image.create(1920, 1080, false, Image.FORMAT_RGBA8)
+		img.fill(Color(0.15, 0.12, 0.2, 1.0))
+		var placeholder := ImageTexture.new()
+		placeholder.set_image(img)
+		# Устанавливаем фон через скрипт
+		var locations_script: DiaryLocations = locations_scene as DiaryLocations
+		if locations_script:
+			locations_script.set_background(placeholder)
+	
+	diary_overlay.add_child(locations_scene)
+	
+	# Подключаем кнопку закрытия
+	var locations_node: DiaryLocations = locations_scene as DiaryLocations
+	if locations_node:
+		locations_node.close_pressed.connect(_close_diary_overlay)
+
 
 func _close_diary_overlay() -> void:
 	if diary_overlay != null:
@@ -204,8 +238,6 @@ func _close_diary_overlay() -> void:
 
 # ─── Диалоги ──────────────────────────────────────────────────────────────────
 
-## Запустить диалог.
-## data = { id, character_id, lines:[{speaker,text,portrait_path}] }
 func start_dialogue(data: Dictionary) -> void:
 	if not dialogue_box:
 		push_error("DialogueBox не найден в %s!" % location_id)
