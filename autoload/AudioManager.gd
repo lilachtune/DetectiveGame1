@@ -10,6 +10,10 @@ var sfx_volume:    float = 1.0
 var _music_player: AudioStreamPlayer
 var _sfx_player:   AudioStreamPlayer
 
+# ─── Плавные переходы ────────────────────────────────────────────
+var _current_fade_tween: Tween
+var _fade_duration: float = 0.6
+
 # ─── Музыкальные треки ────────────────────────────────────────────
 var main_menu_music: AudioStream
 var locations_music: AudioStream
@@ -19,6 +23,7 @@ func _ready() -> void:
 	_music_player = AudioStreamPlayer.new()
 	_music_player.name = "MusicPlayer"
 	add_child(_music_player)
+	_music_player.volume_db = 0.0
 	_music_player.finished.connect(_on_music_finished)
 
 	_sfx_player = AudioStreamPlayer.new()
@@ -37,15 +42,47 @@ func _load_music_tracks() -> void:
 
 
 func play_main_menu_music() -> void:
-	play_music(main_menu_music)
+	_crossfade_to(main_menu_music)
 
 
 func play_locations_music() -> void:
-	play_music(locations_music)
+	_crossfade_to(locations_music)
 
 
 func play_dosmotr_music() -> void:
-	play_music(dosmotr_music)
+	_crossfade_to(dosmotr_music)
+
+
+# ─── Плавная смена музыки ─────────────────────────────────────────
+
+func _crossfade_to(new_stream: AudioStream) -> void:
+	if _music_player.stream == new_stream and _music_player.playing:
+		return
+
+	# Гасим текущий твин, если был
+	if _current_fade_tween and _current_fade_tween.is_valid():
+		_current_fade_tween.kill()
+
+	# Если музыка уже играет — плавно убавляем громкость до 0
+	if _music_player.playing and _music_player.stream != null:
+		_current_fade_tween = create_tween()
+		_current_fade_tween.tween_property(_music_player, "volume_db", -80.0, _fade_duration * 0.6)
+		_current_fade_tween.tween_callback(_switch_and_fade_in.bind(new_stream))
+	else:
+		_switch_and_fade_in(new_stream)
+
+
+func _switch_and_fade_in(new_stream: AudioStream) -> void:
+	_music_player.stream = new_stream
+	_music_player.volume_db = -80.0
+	_music_player.play()
+
+	# Плавно наращиваем громкость до нормальной (0 dB — вся громкость на шине)
+	if _current_fade_tween and _current_fade_tween.is_valid():
+		_current_fade_tween.kill()
+
+	_current_fade_tween = create_tween()
+	_current_fade_tween.tween_property(_music_player, "volume_db", 0.0, _fade_duration)
 
 
 # ─── Настройка громкости ──────────────────────────────────────────────────────
@@ -56,18 +93,28 @@ func set_master_volume(value: float) -> void:
 		AudioServer.get_bus_index("Master"),
 		linear_to_db(master_volume)
 	)
+	# Пересчитываем дочерние шины, т.к. их громкость зависит от master
+	_update_music_bus()
+	_update_sfx_bus()
 
 func set_music_volume(value: float) -> void:
 	music_volume = clampf(value, 0.0, 1.0)
-	var idx := AudioServer.get_bus_index("Music")
-	if idx >= 0:
-		AudioServer.set_bus_volume_db(idx, linear_to_db(music_volume))
+	_update_music_bus()
 
 func set_sfx_volume(value: float) -> void:
 	sfx_volume = clampf(value, 0.0, 1.0)
+	_update_sfx_bus()
+
+
+func _update_music_bus() -> void:
+	var idx := AudioServer.get_bus_index("Music")
+	if idx >= 0:
+		AudioServer.set_bus_volume_db(idx, linear_to_db(music_volume * master_volume))
+
+func _update_sfx_bus() -> void:
 	var idx := AudioServer.get_bus_index("SFX")
 	if idx >= 0:
-		AudioServer.set_bus_volume_db(idx, linear_to_db(sfx_volume))
+		AudioServer.set_bus_volume_db(idx, linear_to_db(sfx_volume * master_volume))
 
 
 # ─── Воспроизведение ──────────────────────────────────────────────────────────

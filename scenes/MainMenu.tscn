@@ -189,4 +189,3 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Settings" parent="." unique_id=63361885 instance=ExtResource("2")]
-anchors_preset = 0
