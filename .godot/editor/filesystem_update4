@@ -1,0 +1,4 @@
+res://autoload/AudioManager.gd
+res://scripts/InterrogationOverlay.gd
+res://scripts/LocationBase.gd
+res://scripts/MainMenu.gd

@@ -41,8 +41,8 @@ func _ready() -> void:
 	DiaryManager.discover_location(location_id)
 	_apply_background()
 
-	if location_music:
-		AudioManager.play_music(location_music)
+	# Зацикленная музыка поиска улик
+	AudioManager.play_locations_music()
 
 	if diary_button:
 		diary_button.theme_type_variation = &"HudButton"

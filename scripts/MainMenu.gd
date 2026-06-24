@@ -42,6 +42,9 @@ func _ready() -> void:
 
 	_play_entrance_animation()
 
+	# Зацикленная музыка главного меню
+	AudioManager.play_main_menu_music()
+
 
 ## Подставляет картинку фона: сначала смотрит на поле в Инспекторе,
 ## затем — на файл по умолчанию res://assets/ui/menu_background.png.

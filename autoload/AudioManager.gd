@@ -10,10 +10,16 @@ var sfx_volume:    float = 1.0
 var _music_player: AudioStreamPlayer
 var _sfx_player:   AudioStreamPlayer
 
+# ─── Музыкальные треки ────────────────────────────────────────────
+var main_menu_music: AudioStream
+var locations_music: AudioStream
+var dosmotr_music:   AudioStream
+
 func _ready() -> void:
 	_music_player = AudioStreamPlayer.new()
 	_music_player.name = "MusicPlayer"
 	add_child(_music_player)
+	_music_player.finished.connect(_on_music_finished)
 
 	_sfx_player = AudioStreamPlayer.new()
 	_sfx_player.name = "SFXPlayer"
@@ -21,6 +27,25 @@ func _ready() -> void:
 
 	_ensure_buses()
 	_apply_volumes()
+	_load_music_tracks()
+
+
+func _load_music_tracks() -> void:
+	main_menu_music = load("res://resources/main_menu.mp3")
+	locations_music = load("res://resources/locations.mp3")
+	dosmotr_music   = load("res://resources/dosmotr.mp3")
+
+
+func play_main_menu_music() -> void:
+	play_music(main_menu_music)
+
+
+func play_locations_music() -> void:
+	play_music(locations_music)
+
+
+func play_dosmotr_music() -> void:
+	play_music(dosmotr_music)
 
 
 # ─── Настройка громкости ──────────────────────────────────────────────────────
@@ -74,6 +99,14 @@ func load_save_data(data: Dictionary) -> void:
 	set_master_volume(data.get("master_volume", 1.0))
 	set_music_volume(data.get("music_volume",  0.8))
 	set_sfx_volume(data.get("sfx_volume",    1.0))
+
+
+# ─── Зацикливание ─────────────────────────────────────────────────────────────
+
+func _on_music_finished() -> void:
+	# Автоматически перезапускаем текущую зацикленную музыку
+	if _music_player.stream != null:
+		_music_player.play()
 
 
 # ─── Внутренние методы ────────────────────────────────────────────────────────

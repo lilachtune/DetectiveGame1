@@ -1,5 +1,5 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1782289865
+::res://::1782291160
 README.md::TextFile::-1::1782289795::0::1::::<><><>0<>0<><>::
 ::res://assets/::1782192998
 icon.png::CompressedTexture2D::4406543559353230761::1782058368::1782058368::1::::<><><>0<>0<>cb16b976403e4a41ec3f7099f6264483<>res://.godot/imported/icon.png-b6a7fb2db36edd3d95dc42f1dc8c1c5d.ctex::
@@ -33,8 +33,11 @@ AudioManager.gd::GDScript::1175970975506238593::1782058375::0::1::::<>Node<><>0<
 DiaryManager.gd::GDScript::5222052309876296351::1782202862::0::1::::<>Node<><>0<>0<><>::
 GameManager.gd::GDScript::1160329509100285537::1782058375::0::1::::<>Node<><>0<>0<><>::
 SaveManager.gd::GDScript::1605188529582037130::1782058375::0::1::::<>Node<><>0<>0<><>::
-::res://resources/::1782058375
+::res://resources/::1782290834
 DialogueData.gd::GDScript::8830382983024258734::1782058375::0::1::::DialogueData<>RefCounted<><>0<>0<><>::
+dosmotr.mp3::AudioStreamMP3::7335368628538071789::1782290774::1782291161::1::::<><><>0<>0<>a7d083ae5ab615554fea9b2df4f8859c<>res://.godot/imported/dosmotr.mp3-8a3225ca3c9495083fb9a0029086737e.mp3str::
+locations.mp3::AudioStreamMP3::3587434710063279197::1782290837::1782291161::1::::<><><>0<>0<>7f6c8288d8a1ec1f72bb4adbf7f9c8ef<>res://.godot/imported/locations.mp3-7eb45da89295516c2065bbc172a86744.mp3str::
+main_menu.mp3::AudioStreamMP3::8343293595082852184::1782290794::1782291161::1::::<><><>0<>0<>2fae787a147adc6af0c8a3557a8791b3<>res://.godot/imported/main_menu.mp3-32635d9e7e51e7dea807e7f1bf44de65.mp3str::
 ::res://resources/theme/::1782201551
 GameTheme.tres::Theme::6678726734558750316::1782201551::0::1::::<><><>0<>0<><>::
 ::res://scenes/::1782206599

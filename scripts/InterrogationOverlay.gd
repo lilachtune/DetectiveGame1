@@ -30,6 +30,8 @@ func show_interrogation() -> void:
 	if overlay_root == null:
 		_build_ui()
 	_start_dialogue()
+	# Зацикленная музыка досмотра (допроса)
+	AudioManager.play_dosmotr_music()
 
 func _build_ui() -> void:
 	if overlay_root != null:
@@ -192,6 +194,8 @@ func _close_interrogation() -> void:
 		location_owner.is_busy = false
 	GameManager.change_state(GameManager.GameState.PLAYING)
 	_is_active = false
+	# Возвращаем музыку поиска улик
+	AudioManager.play_locations_music()
 	var tween := create_tween()
 	tween.tween_property(overlay_root, "modulate:a", 0.0, 0.2)
 	tween.tween_callback(_finish_close)
